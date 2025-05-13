@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import diegovenancio.course.entites.Category;
 import diegovenancio.course.entites.Order;
 import diegovenancio.course.entites.OrderItem;
+import diegovenancio.course.entites.Payment;
 import diegovenancio.course.entites.Product;
 import diegovenancio.course.entites.User;
 import diegovenancio.course.entites.enums.OrderStatus;
@@ -82,7 +83,13 @@ import diegovenancio.course.repositories.UserRepository;
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		p3.getCategories().add(cat3);
+		
+		Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"), o1);
+	    o1.setPayment(pay1);
+	    
+	    orderRepository.save(o1);
 	}
+	
 	
 
 	
