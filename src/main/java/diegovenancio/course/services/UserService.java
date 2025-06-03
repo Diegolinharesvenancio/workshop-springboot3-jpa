@@ -12,6 +12,7 @@ import diegovenancio.course.entites.User;
 import diegovenancio.course.repositories.UserRepository;
 import diegovenancio.course.services.exceptions.DatabaseException;
 import diegovenancio.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -42,10 +43,15 @@ public class UserService {
 	}
 	
 	public User updata(Long id, User obj) {
+		try {
 		User entity = repository.getReferenceById(id);
 		updataData(entity, obj);
 		return repository.save(entity);
+	} 
+	catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
 	}
+}
 	private void updataData(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
